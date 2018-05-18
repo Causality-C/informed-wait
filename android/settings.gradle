@@ -1,0 +1,3 @@
+rootProject.name = 'informedwait'
+
+include ':app'
