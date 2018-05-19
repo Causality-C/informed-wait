@@ -2,7 +2,7 @@
 
 import os
 from flask import Flask
-from flask import request
+from flask import request, jsonify
 from flask_cors import cross_origin
 from pyzomato import Pyzomato
 
@@ -16,8 +16,8 @@ def nearby_restaurants():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
     result = p.getByGeocode(lat, lon)['nearby_restaurants']
-    list_of_restaurants = list(map(lambda x: x['restaurant']['name'], result))
-    return list_of_restaurants
+    list_of_restaurants = list(map(lambda x: (x['restaurant']['name'], x['restaurant']['price_range']), result))
+    return jsonify(list_of_restaurants)
 
 
 if __name__ == '__main__':
