@@ -1,28 +1,44 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+import React from 'react';
+import { ActivityIndicator, Text, View, StyleSheet  } from 'react-native';
 
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+export default class FetchExample extends React.Component {
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+  constructor(props){
+    super(props);
+    this.state ={ isLoading: true}
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
+  componentDidMount(){
+    return fetch('http://0.0.0.0:5000/')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson,
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+  }
+
+
+
+  render(){
+
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
+
+    return(
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Welcome to React Native!
@@ -31,7 +47,7 @@ export default class App extends Component<Props> {
           To get started, edit App.js
         </Text>
         <Text style={styles.instructions}>
-          {instructions}
+          Get Sample Username from Flask: {this.state.dataSource.username}
         </Text>
       </View>
     );
