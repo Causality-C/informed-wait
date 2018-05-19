@@ -9,7 +9,7 @@ export default class FetchExample extends React.Component {
   }
 
   componentDidMount(){
-    return fetch('http://0.0.0.0:5000/')
+    return fetch('https://informed-wait.herokuapp.com/nearby_restaurants')
       .then((response) => response.json())
       .then((responseJson) => {
 
@@ -47,7 +47,7 @@ export default class FetchExample extends React.Component {
           To get started, edit App.js
         </Text>
         <Text style={styles.instructions}>
-          Get Sample Username from Flask: {this.state.dataSource.username}
+          /*Get Sample Username from Flask: {this.state.dataSource.username}*/
         </Text>
       </View>
     );
